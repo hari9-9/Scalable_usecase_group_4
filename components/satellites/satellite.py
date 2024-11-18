@@ -3,6 +3,7 @@ import time
 from protocol.jarvis import Jarvis
 
 # TODO start a server
+# TODO hopping mechanism
 
 class Satellite:
     def __init__(self, satellite_id, linked_ground_station, private_key, public_key, satellites=[]):
