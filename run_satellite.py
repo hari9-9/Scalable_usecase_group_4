@@ -1,21 +1,35 @@
 import time
+import json
 from components.satellites.satellite import Satellite
 
-if __name__ == "__main__":
-    satellite = Satellite(
-        satellite_id="LEO1",
-        linked_ground_station="GS",
-        private_key="./protocol/crypto/private_key.pem",
-        public_key="./protocol/crypto/public_key.pem",
-        satellites=["LEO2", "LEO3"]
-    )
 
+def load_config():
+    with open("config.json", "r") as f:
+        return json.load(f)
+
+
+if __name__ == "__main__":
+    config = load_config()
+    satellites = []
+
+    # Create satellite instances dynamically
+    for satellite_id, connections in config["satellites"].items():
+        satellites.append(Satellite(
+            satellite_id=satellite_id,
+            linked_ground_station=config["ground_station"],
+            private_key="./protocol/crypto/private_key.pem",
+            public_key="./protocol/crypto/public_key.pem",
+            satellites=connections
+        ))
+
+    # Simulate satellite operations
     while True:
-        data = {
-            "sensor_id": "S1",
-            "temperature": 35.2,
-            "smoke_level": 78.0,
-            "humidity": 45.0
-        }
-        satellite.receive_data(data)
+        for satellite in satellites:
+            data = {
+                "sensor_id": "S1",  # Example data for simulation
+                "temperature": 35.2,
+                "smoke_level": 78.0,
+                "humidity": 45.0
+            }
+            satellite.receive_data(data)
         time.sleep(10)
