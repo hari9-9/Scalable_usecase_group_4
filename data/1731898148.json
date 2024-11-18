@@ -1,0 +1,6 @@
+{
+    "sensor_id": "S1",
+    "temperature": 55.2,
+    "smoke_level": 80.0,
+    "humidity": 40.0
+}
