@@ -38,6 +38,56 @@ Scalable_usecase_group_4/
 ```
 
 ---
+### Component
+```mermaid
+graph TD
+    subgraph Forest [forest]
+        direction TB
+        S1[Sensor_1]
+        S2[Sensor_2]
+        S3[Sensor_3]
+        S4[Sensor_4]
+        S5[Sensor_5]
+        S6[Sensor_6]
+        S7[Sensor_7]
+        S8[Sensor_8]
+        S9[Sensor_9]
+        S10[Sensor_10]
+    end
+
+    subgraph Sky [space]
+        direction LR
+        LEO1[Satellite_1] 
+        LEO2[Satellite_2] 
+        LEO3[Satellite_3]
+        LEO4[Satellite_4]
+        LEO5[Satellite_5]
+    end
+
+    subgraph Ground [ground]
+        GS[Ground Station]
+    end
+
+    %% Sensor to Satellite
+    S1 -- data --> LEO1
+    S2 -- data --> LEO1
+    S3 -- data --> LEO2
+    S4 -- data --> LEO3
+    S5 -- data --> LEO3
+    S6 -- data --> LEO4
+    S7 -- data --> LEO4
+    S8 -- data --> LEO5
+    S9 -- data --> LEO5
+    S10 -- data --> LEO2
+
+    %% Satellite to Ground Station
+    LEO1 -- priority data --> GS
+    LEO2 -- priority data --> GS
+    LEO3 -- priority data --> GS
+    LEO4 -- priority data --> GS
+    LEO5 -- priority data --> GS
+
+```
 
 ## **Setup**
 
