@@ -40,7 +40,7 @@ Scalable_usecase_group_4/
 ---
 ### Component
 ```mermaid
-graph TD
+graph LR
     subgraph Forest [forest]
         direction TB
         S1[Sensor_1]
