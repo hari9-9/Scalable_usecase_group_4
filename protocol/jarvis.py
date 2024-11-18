@@ -25,6 +25,7 @@ class Jarvis:
         self.private_key_file = os.path.join(self.project_root, "private_key.pem")  # Private key path
         self.public_key_file = os.path.join(self.project_root, "public_key.pem")    # Public key path
         self.message_queue = queue.Queue()
+        print(self.adjacency_list)
 
     @staticmethod
     def get_local_ip():
@@ -393,10 +394,12 @@ class Jarvis:
 
         full_message = self.build_message(dest_ip, message, message_id, message_type)
         try:
+            _, previous_nodes = self.dijkstra(self.adjacency_list, self.local_ip)
+            next_hop = self.get_next_hop(previous_nodes, self.local_ip, dest_ip)
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-                s.connect((dest_ip, self.receive_port))
+                s.connect((next_hop, self.receive_port))
                 s.sendall(full_message)
-                print(f"Message sent to {dest_ip}: {message}")
+                print(f"Message sent to {next_hop}: {message}")
         except Exception as e:
             print(f"Error sending message: {e}")
 
