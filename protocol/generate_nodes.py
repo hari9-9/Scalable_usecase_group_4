@@ -13,6 +13,7 @@ specific_port = 12345  # The port to scan
 max_weight = 10  # Maximum weight for edges
 min_weight = 1  # Minimum weight for edges
 
+# TODO sensor should not put other sensors distance in the adj list
 def get_local_ip(public_address="8.8.8.8", public_port=80):
     """Retrieve the local IP address."""
     try:

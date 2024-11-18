@@ -2,6 +2,7 @@ import random
 import time
 from protocol.jarvis import Jarvis
 
+# TODO start a server
 
 class Sensor:
     def __init__(self, sensor_id, linked_satellite, private_key, public_key):

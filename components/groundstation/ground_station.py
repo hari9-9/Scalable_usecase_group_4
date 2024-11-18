@@ -4,6 +4,7 @@ import time
 
 from protocol.jarvis import Jarvis
 
+# TODO start a server
 
 class GroundStation:
     def __init__(self, storage_path, private_key, public_key):
