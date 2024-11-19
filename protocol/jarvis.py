@@ -25,6 +25,7 @@ class Jarvis:
         self.private_key_file = os.path.join(self.project_root, "crypto/private_key.pem")  # Private key path
         self.public_key_file = os.path.join(self.project_root, "crypto/public_key.pem")    # Public key path
         self.message_queue = queue.Queue()
+        self.callback = None
         print(self.adjacency_list)
 
     @staticmethod
@@ -221,6 +222,8 @@ class Jarvis:
             # Decrypt the message content
             decrypted_message = self.decrypt_message(encrypted_content)
             print(f"Decrypted message: {decrypted_message}")
+            if self.callback is not None:
+                self.callback(decrypted_message)
 
             # Parse JSON if applicable
             parsed_message = self._try_parse_json(decrypted_message)
@@ -426,8 +429,8 @@ class Jarvis:
                 with conn:
                     data = conn.recv(4096)
                     print(">>>>>", data)
+                    self.callback = callback
                     self.handle_message(data)
-                    callback(data)
 
     def start(self):
         """Start the receiver server in a separate thread."""
