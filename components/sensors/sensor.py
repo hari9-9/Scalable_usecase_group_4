@@ -36,8 +36,8 @@ class Sensor:
         data = self.generate_data()
         print(f"Sensor {self.local_ip} generated data: {data}")
 
-        # Select the neighbor with the smallest weight
-        next_hop = min(self.neighbors, key=self.neighbors.get) # FIXME should be sent only to groundstation
+        # Select the ground station among all neighbors
+        next_hop = max(self.neighbors, key=self.neighbors.get)
         print(f"Sensor {self.local_ip} sending data to next hop: {next_hop}")
 
         self.jarvis.send_message(dest_ip=next_hop, message=data)
