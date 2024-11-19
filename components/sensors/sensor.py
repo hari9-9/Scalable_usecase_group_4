@@ -28,19 +28,14 @@ class Sensor:
         }
 
     def send_data(self):
-        """Send data to the nearest neighbor."""
-        if not self.neighbors:
-            print(f"No neighbors found for sensor {self.local_ip}. Data transmission skipped.")
-            return
+        """Send data to the hardcoded destination IP."""
+        dest_ip = "10.35.70.17"  # Hardcoded destination IP
 
         data = self.generate_data()
         print(f"Sensor {self.local_ip} generated data: {data}")
+        print(f"Sensor {self.local_ip} sending data to hardcoded destination: {dest_ip}")
 
-        # Select the ground station among all neighbors
-        next_hop = max(self.neighbors, key=self.neighbors.get)
-        print(f"Sensor {self.local_ip} sending data to next hop: {next_hop}")
-
-        self.jarvis.send_message(dest_ip=next_hop, message=data)
+        self.jarvis.send_message(dest_ip=dest_ip, message=data)
 
     def handle_message(self, data):
         """Handle incoming messages, such as ACKs."""
