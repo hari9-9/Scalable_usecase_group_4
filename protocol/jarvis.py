@@ -427,7 +427,7 @@ class Jarvis:
                     data = conn.recv(4096)
                     print(">>>>>", data)
                     self.handle_message(data)
-                    callback()
+                    callback(data)
 
     def start(self):
         """Start the receiver server in a separate thread."""
