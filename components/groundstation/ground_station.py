@@ -31,4 +31,4 @@ class GroundStation:
 
     def start_receiver(self):
         """Start the ground station's receiver."""
-        self.jarvis.start_receiver()
+        self.jarvis.start_receiver(self.store_data)

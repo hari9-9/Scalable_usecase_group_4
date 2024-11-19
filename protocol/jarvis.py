@@ -411,7 +411,7 @@ class Jarvis:
         print("Adjacency list stored successfully.")
 
 
-    def start_receiver(self):
+    def start_receiver(self, callback = None):
         """Start the server to receive direct messages."""
         print("Starting receiver server...")
         time.sleep(2)  # Simulate processing delay
@@ -427,6 +427,7 @@ class Jarvis:
                     data = conn.recv(4096)
                     print(">>>>>", data)
                     self.handle_message(data)
+                    callback()
 
     def start(self):
         """Start the receiver server in a separate thread."""
