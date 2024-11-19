@@ -319,7 +319,7 @@ class Jarvis:
                         "message_id": message["message_id"],  # Include the packet ID
                         "source_ip": self.local_ip,  # This node is the source for the ACK
                         "dest_ip": message["source_ip"],  # ACK goes back to the original sender
-                        "hop_count": 0  # Reset hop count for ACK
+                        "hop_count": message["hop_count"]  # Reset hop count for ACK
                     }
                     print(f"Sending ACK for message ID {message['message_id']} to {message['source_ip']}")
                     self.send_message(message["source_ip"], ack_message, message_type='ACK')
