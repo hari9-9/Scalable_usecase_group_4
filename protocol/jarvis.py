@@ -22,8 +22,8 @@ class Jarvis:
         self.local_ip = self.get_local_ip()
         self.adjacency_list = self.load_adjacency_list(adjacency_list_file)
         self.project_root = os.path.abspath(os.path.dirname(__file__))  # Get project root dynamically
-        self.private_key_file = os.path.join(self.project_root, "private_key.pem")  # Private key path
-        self.public_key_file = os.path.join(self.project_root, "public_key.pem")    # Public key path
+        self.private_key_file = os.path.join(self.project_root, "crypro/private_key.pem")  # Private key path
+        self.public_key_file = os.path.join(self.project_root, "crypto/public_key.pem")    # Public key path
         self.message_queue = queue.Queue()
         print(self.adjacency_list)
 
