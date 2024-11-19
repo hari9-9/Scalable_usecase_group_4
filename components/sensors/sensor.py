@@ -37,7 +37,7 @@ class Sensor:
         print(f"Sensor {self.local_ip} generated data: {data}")
 
         # Select the neighbor with the smallest weight
-        next_hop = min(self.neighbors, key=self.neighbors.get)
+        next_hop = min(self.neighbors, key=self.neighbors.get) # FIXME should be sent only to groundstation
         print(f"Sensor {self.local_ip} sending data to next hop: {next_hop}")
 
         self.jarvis.send_message(dest_ip=next_hop, message=data)
@@ -65,8 +65,3 @@ class Sensor:
         while True:
             self.send_data()
             time.sleep(5)
-
-
-if __name__ == "__main__":
-    sensor = Sensor()
-    sensor.start()

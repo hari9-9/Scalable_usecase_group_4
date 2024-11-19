@@ -32,8 +32,3 @@ class GroundStation:
     def start_receiver(self):
         """Start the ground station's receiver."""
         self.jarvis.start_receiver()
-
-
-if __name__ == "__main__":
-    ground_station = GroundStation()
-    ground_station.start_receiver()

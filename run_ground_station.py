@@ -1,22 +1,11 @@
-import time
 from components.groundstation.ground_station import GroundStation
 
 if __name__ == "__main__":
+    # Start the ground station
     ground_station = GroundStation(
-        storage_path="./data",
-        private_key="./protocol/crypto/private_key.pem",
-        public_key="./protocol/crypto/public_key.pem"
+        receive_port=33000,
+        send_port=34000,
+        adjacency_list_file="./protocol/discovery/adjacency_list.json",
+        storage_path="./data"
     )
-
-    while True:
-        data = {
-            "sensor_id": "S1",
-            "temperature": 55.2,
-            "smoke_level": 80.0,
-            "humidity": 40.0
-        }
-        raw_message = ground_station.jarvis.build_message(
-            dest_ip="GS", message=data, message_type="priority"
-        )
-        ground_station.receive_data(raw_message)
-        time.sleep(10)
+    ground_station.start_receiver()

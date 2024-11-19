@@ -38,8 +38,3 @@ class Satellite:
     def start_receiver(self):
         """Start the satellite's receiver."""
         self.jarvis.start_receiver()
-
-
-if __name__ == "__main__":
-    satellite = Satellite()
-    satellite.start_receiver()
