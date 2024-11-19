@@ -1,61 +1,45 @@
-import threading
-import time
 from protocol.jarvis import Jarvis
 
-# TODO start a server
-# TODO hopping mechanism
 
 class Satellite:
-    def __init__(self, satellite_id, linked_ground_station, private_key, public_key, satellites=[]):
-        self.satellite_id = satellite_id
-        self.linked_ground_station = linked_ground_station
-        self.satellites = satellites  # List of other satellites to broadcast data to
-        self.jarvis = Jarvis(private_key, public_key)
+    def __init__(self, receive_port=33000, send_port=34000, adjacency_list_file="./discovery/adjacency_list.json"):
+        self.jarvis = Jarvis(
+            receive_port=receive_port,
+            send_port=send_port,
+            adjacency_list_file=adjacency_list_file,
+        )
+        self.local_ip = self.jarvis.local_ip
+        self.neighbors = self.get_neighbors()
 
-    def receive_data(self, data):
-        """Receive data from sensors."""
-        print(f"Satellite {self.satellite_id} received data: {data}")
-        self.broadcast_to_satellites(data)
-        self.forward_to_ground_station(data)
+    def get_neighbors(self):
+        """Retrieve neighbors from the adjacency list."""
+        return self.jarvis.adjacency_list.get(self.local_ip, {})
 
-    def broadcast_to_satellites(self, data):
-        """Broadcast data to other satellites."""
-        print(f"Satellite {self.satellite_id} broadcasting data to satellites.")
-        for satellite in self.satellites:
-            message = self.jarvis.build_message(satellite, data, message_type="broadcast")
-            print(f"Broadcasted to {satellite}: {message[:50]}...")  # Simulating broadcast
+    def handle_message(self, data):
+        """Process incoming messages."""
+        message = self.jarvis.parse_message(data)
+        print(f"Satellite {self.local_ip} received message: {message['message_content']}")
 
-    def forward_to_ground_station(self, data):
-        """Forward data to the ground station."""
-        print(f"Satellite {self.satellite_id} forwarding data to Ground Station.")
-        message = self.jarvis.build_message(self.linked_ground_station, data, message_type="priority")
-        print(f"Forwarded to Ground Station: {message[:50]}...")  # Simulating forward
+        if message["dest_ip"] == self.jarvis.local_ip:
+            print(f"Message delivered to satellite {self.local_ip}.")
+        else:
+            self.forward_message(message)
+
+    def forward_message(self, message):
+        """Forward the message to the next hop."""
+        _, previous_nodes = self.jarvis.dijkstra(self.jarvis.adjacency_list, self.local_ip)
+        next_hop = self.jarvis.get_next_hop(previous_nodes, self.local_ip, message["dest_ip"])
+        if next_hop:
+            print(f"Satellite {self.local_ip} forwarding message to next hop: {next_hop}")
+            self.jarvis.forward_message(message, next_hop)
+        else:
+            print(f"Satellite {self.local_ip} could not find a route to {message['dest_ip']}. Dropping packet.")
+
+    def start_receiver(self):
+        """Start the satellite's receiver."""
+        self.jarvis.start_receiver()
 
 
 if __name__ == "__main__":
-    satellite = Satellite(
-        satellite_id="LEO1",
-        linked_ground_station="GS",
-        private_key="../protocol/crypto/private_key.pem",
-        public_key="../protocol/crypto/public_key.pem",
-        satellites=["LEO2", "LEO3"]
-    )
-
-
-    # Simulate incoming data from sensors
-    def simulate_sensor_input():
-        while True:
-            data = {
-                "sensor_id": "S1",
-                "temperature": 35.2,
-                "smoke_level": 78.0,
-                "humidity": 45.0
-            }
-            satellite.receive_data(data)
-            time.sleep(10)
-
-
-    threading.Thread(target=simulate_sensor_input, daemon=True).start()
-
-    while True:
-        time.sleep(1)
+    satellite = Satellite()
+    satellite.start_receiver()
