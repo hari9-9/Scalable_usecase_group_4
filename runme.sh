@@ -28,7 +28,7 @@ echo "The host is: $host"
 
 case $host in
   003)
-    python3 satellite.py & echo $! >> "$pid_file"
+    python3 run_satellite.py & echo $! >> "$pid_file"
     echo "Satellites switched on..."
     ;;
   004)
@@ -36,7 +36,7 @@ case $host in
     echo "Sensor Running"
     ;;
   007)
-    python3 satellite.py & echo $! >> "$pid_file"
+    python3 run_satellite.py & echo $! >> "$pid_file"
     echo "Satellites switched on..."
     ;;
   017)
@@ -44,15 +44,15 @@ case $host in
     echo "Ground Station"
     ;;
   025)
-    python3 satellite.py & echo $! >> "$pid_file"
+    python3 run_satellite.py & echo $! >> "$pid_file"
     echo "Satellites switched on..."
     ;;
   027)
-    python3 satellite.py & echo $! >> "$pid_file"
+    python3 run_satellite.py & echo $! >> "$pid_file"
     echo "Satellites switched on..."
     ;;
   028)
-    python3 satellite.py & echo $! >> "$pid_file"
+    python3 run_satellite.py & echo $! >> "$pid_file"
     echo "Satellites switched on..."
     ;;
 esac
