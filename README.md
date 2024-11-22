@@ -33,11 +33,30 @@ Scalable_usecase_group_4/
 ├── run_sensor.py                  # Run the sensor component
 ├── run_satellite.py               # Run the satellite component
 ├── run_ground_station.py          # Run the ground station component
-├── run.sh                         # Orchestrates running all components
+├── runme.sh                         # Orchestrates running all components
 ├── generate_keys.py               # Script to generate RSA keys
 ```
 
 ---
+### Instrucitons To Run
+
+Please Note running this project requires the following 7 raspberry PI's 
+    "10.35.70.7"
+    "10.35.70.4":
+    "10.35.70.27"
+    "10.35.70.3"
+    "10.35.70.25"
+    "10.35.70.28"
+    "10.35.70.17"
+
+Please Clone this Github repository in all the above mentioned PI's and then run the following command to enable the script:
+```bash
+chmod +x runme.sh
+./runme.sh
+```
+The script will auto detect the PI and based on the host IP will either start a satellite/ground station/sensor.
+
+
 ### Component
 ```mermaid
 graph LR
