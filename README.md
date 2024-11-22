@@ -99,6 +99,12 @@ graph LR
     S9 -- data --> LEO5
     S10 -- data --> LEO2
 
+    %% Satellite to Satellite Hopping
+    LEO1 -- relay data --> LEO2
+    LEO2 -- relay data --> LEO3
+    LEO3 -- relay data --> LEO4
+    LEO4 -- relay data --> LEO5
+
     %% Satellite to Ground Station
     LEO1 -- priority data --> GS
     LEO2 -- priority data --> GS
@@ -107,7 +113,6 @@ graph LR
     LEO5 -- priority data --> GS
 
 ```
-
 ## **Setup**
 
 ### 1. **Install Dependencies**
