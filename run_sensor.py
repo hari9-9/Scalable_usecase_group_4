@@ -14,14 +14,6 @@ def start_sensor_instance(sensor_id, receive_port, send_port):
 
 
 if __name__ == "__main__":
-    # Configuration for five sensors with unique ports
-    # sensors_config = [
-    #     {"sensor_id": "S1", "receive_port": 33001, "send_port": 33006},
-    #     {"sensor_id": "S2", "receive_port": 33002, "send_port": 33007},
-    #     {"sensor_id": "S3", "receive_port": 33003, "send_port": 33008},
-    #     {"sensor_id": "S4", "receive_port": 33004, "send_port": 33009},
-    #     {"sensor_id": "S5", "receive_port": 33005, "send_port": 33010},
-    # ]
     sensors_config = [{"sensor_id": "S1", "receive_port": 33000, "send_port": 34000}]
 
     # Start each sensor in its own thread
